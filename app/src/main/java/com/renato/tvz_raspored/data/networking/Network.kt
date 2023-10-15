@@ -32,5 +32,4 @@ class Network {
 
         service = retrofit.create(ScheduleService::class.java)
     }
-
 }

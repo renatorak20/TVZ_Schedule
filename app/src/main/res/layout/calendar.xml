@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/month_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="18dp"
+        android:layout_marginStart="60dp"
+        android:textSize="34sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="February"
+        android:visibility="invisible"/>
+
+    <ImageView
+        android:id="@+id/back"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="10dp"
+        android:background="@drawable/arrow_back"
+        android:padding="30dp"
+        app:layout_constraintBottom_toBottomOf="@+id/month_title"
+        app:layout_constraintEnd_toStartOf="@+id/forward"
+        app:layout_constraintTop_toTopOf="@+id/month_title"
+        android:visibility="invisible" />
+
+    <ImageView
+        android:id="@+id/forward"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:background="@drawable/arrow_forward"
+        android:padding="30dp"
+        android:layout_marginEnd="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/back"
+        android:visibility="invisible" />
+
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        app:layout_constraintTop_toBottomOf="@+id/month_title"
+        android:visibility="invisible">
+
+        <include layout="@layout/calendar_day" />
+
+        <include layout="@layout/calendar_day" />
+
+        <include layout="@layout/calendar_day" />
+
+        <include layout="@layout/calendar_day" />
+
+        <include layout="@layout/calendar_day" />
+
+        <include layout="@layout/calendar_day" />
+
+        <include layout="@layout/calendar_day" />
+
+    </LinearLayout>
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:visibility="invisible"
+        android:layout_marginTop="18dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        tools:listitem="@layout/course_info_recycler_item"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

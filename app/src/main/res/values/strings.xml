@@ -3,16 +3,33 @@
     <string name="action_settings">Settings</string>
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>
-    <string name="departments_title">Departments</string>
+    <string name="departments_title">Studij</string>
 
     <string name="semester_chip">%1$s. semestar (%2$s)</string>
 
-    <string name="monday_short">PON</string>
-    <string name="tuesday_short">UTO</string>
-    <string name="wednesday_short">SRI</string>
-    <string name="thursday_short">THU</string>
-    <string name="friday_short">FRI</string>
-    <string name="saturday_short">SAT</string>
-    <string name="sunday_short">SUN</string>
+    <string-array name="days_in_week">
+        <item name="monday_short">PON</item>
+        <item name="tuesday_short">UTO</item>
+        <item name="wednesday_short">SRI</item>
+        <item name="thursday_short">THU</item>
+        <item name="friday_short">FRI</item>
+        <item name="saturday_short">SAT</item>
+        <item name="sunday_short">SUN</item>
+    </string-array>
+
+    <string-array name="months">
+        <item name="january">Siječanj</item>
+        <item name="february">Veljača</item>
+        <item name="march">Ožujak</item>
+        <item name="april">Travanj</item>
+        <item name="may">Svibanj</item>
+        <item name="june">Lipanj</item>
+        <item name="july">Srpanj</item>
+        <item name="august">Kolovoz</item>
+        <item name="september">Rujan</item>
+        <item name="october">Listopad</item>
+        <item name="november">Studeni</item>
+        <item name="december">Prosinac</item>
+    </string-array>
 
 </resources>

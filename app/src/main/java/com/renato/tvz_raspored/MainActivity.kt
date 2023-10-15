@@ -3,10 +3,13 @@ package com.renato.tvz_raspored
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
+import android.view.View
+import android.view.WindowManager
+import android.widget.ArrayAdapter
+import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
-import android.widget.ArrayAdapter
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.chip.Chip
@@ -14,7 +17,9 @@ import com.renato.tvz_raspored.data.model.Department
 import com.renato.tvz_raspored.data.recyclerview.CourseInfoAdapter
 import com.renato.tvz_raspored.databinding.ActivityMainBinding
 import com.renato.tvz_raspored.viewmodel.TestVM
-import java.util.ArrayList
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+import java.util.Calendar
 
 class MainActivity : AppCompatActivity() {
 
@@ -25,6 +30,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var departmentCode: String
     private lateinit var semesterNumber: String
+    private val calendar = Calendar.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         WindowCompat.setDecorFitsSystemWindows(window, false)
@@ -68,6 +74,7 @@ class MainActivity : AppCompatActivity() {
                 var chip = Chip(this)
                 chip.text = this.getString(R.string.semester_chip, semester.SemesterNumber, semester.Department)
                 chip.setOnClickListener {
+                    binding.progressCircular.show()
                     semesterNumber = (it as Chip).text.toString()[0].toString()
                     val regex = Regex("\\(([^)]+)\\)")
                     val matchResult = regex.find(it.text.toString())
@@ -81,9 +88,91 @@ class MainActivity : AppCompatActivity() {
 
         viewModel.getCourseInfos().observe(this) {
             recyclerAdapter = CourseInfoAdapter(it)
-            binding.recyclerView.layoutManager = LinearLayoutManager(this)
-            binding.recyclerView.adapter = recyclerAdapter
+            binding.calendar.recyclerView.layoutManager = LinearLayoutManager(this)
+            binding.calendar.recyclerView.adapter = recyclerAdapter
+            binding.progressCircular.hide()
+            enableCalendar()
         }
 
+        viewModel.getCurrentMonth().observe(this) {
+            binding.calendar.monthTitle.text = getCurrentMonthString()
+        }
+
+        binding.calendar.back.setOnClickListener {
+            previousWeek()
+        }
+
+        binding.calendar.forward.setOnClickListener {
+            nextWeek()
+        }
     }
+
+    private fun enableCalendar() {
+        with(binding.calendar) {
+            monthTitle.visibility = View.VISIBLE
+            back.visibility = View.VISIBLE
+            forward.visibility = View.VISIBLE
+            linearLayout.visibility = View.VISIBLE
+            recyclerView.visibility = View.VISIBLE
+        }
+        initializeCalendar()
+    }
+
+    private fun initializeCalendar() {
+        viewModel.setCurrentMonth(calendar.get(Calendar.MONTH) + 1)
+        viewModel.setCurrentDaysOfWeek(getDaysOfCurrentWeek())
+
+        val daysAWeek = mutableListOf<String>()
+        for(day in resources.getStringArray(R.array.days_in_week)) {
+            daysAWeek.add(day)
+        }
+        for(dayAWeek in 0 until binding.calendar.linearLayout.childCount) {
+            ((binding.calendar.linearLayout.getChildAt(dayAWeek) as LinearLayout).getChildAt(0) as TextView).text = daysAWeek[dayAWeek]
+            ((binding.calendar.linearLayout.getChildAt(dayAWeek) as LinearLayout).getChildAt(1) as TextView).text = viewModel.getCurrentDaysOfWeek().value!![dayAWeek]
+        }
+    }
+
+    private fun showDaysOfWeek() {
+        for(dayAWeek in 0 until binding.calendar.linearLayout.childCount) {
+            ((binding.calendar.linearLayout.getChildAt(dayAWeek) as LinearLayout).getChildAt(1) as TextView).text = viewModel.getCurrentDaysOfWeek().value!![dayAWeek]
+        }
+    }
+    fun getCurrentMonthString() = resources.getStringArray(R.array.months)[viewModel.getCurrentMonth().value!!]
+
+    fun getDaysOfCurrentWeek(): ArrayList<String> {
+        val format: DateFormat = SimpleDateFormat("dd")
+        calendar.firstDayOfWeek = Calendar.MONDAY
+        calendar[Calendar.DAY_OF_WEEK] = Calendar.MONDAY
+
+        val days = arrayListOf<String>()
+        for (i in 0..6) {
+            days.add(format.format(calendar.time))
+            calendar.add(Calendar.DAY_OF_MONTH, 1)
+        }
+        return days
+    }
+
+    fun nextWeek() {
+        val format: DateFormat = SimpleDateFormat("dd")
+        val days = arrayListOf<String>()
+        for (i in 0..6) {
+            days.add(format.format(calendar.time))
+            calendar.add(Calendar.DAY_OF_MONTH, 1)
+        }
+        viewModel.setCurrentDaysOfWeek(days)
+        showDaysOfWeek()
+    }
+    fun previousWeek() {
+        val format: DateFormat = SimpleDateFormat("dd")
+        val days = arrayListOf<String>()
+        calendar.add(Calendar.DAY_OF_MONTH, -7)
+        for (i in 0..6) {
+            calendar.add(Calendar.DAY_OF_MONTH, -1)
+            days.add(format.format(calendar.time))
+        }
+        days.reverse()
+        viewModel.setCurrentDaysOfWeek(days)
+        showDaysOfWeek()
+    }
+
 }

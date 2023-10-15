@@ -14,10 +14,9 @@ import java.util.Calendar
 class TestVM: ViewModel() {
 
     private val _departments = MutableLiveData<ArrayList<Department>>()
-
     fun getDepartments() = _departments
 
-    fun setDepartments(departments: ArrayList<Department>) {
+    private fun setDepartments(departments: ArrayList<Department>) {
         _departments.value = departments
     }
 
@@ -34,8 +33,7 @@ class TestVM: ViewModel() {
     private val _semesters = MutableLiveData<ArrayList<Semester>>()
 
     fun getSemesters() = _semesters
-
-    fun setSemesters(semesters: ArrayList<Semester>) {
+    private fun setSemesters(semesters: ArrayList<Semester>) {
         _semesters.value = semesters
     }
 
@@ -50,10 +48,9 @@ class TestVM: ViewModel() {
     }
 
     private val _courseInfos = MutableLiveData<ArrayList<CourseInfo>>()
-
     fun getCourseInfos() = _courseInfos
 
-    fun setCourseInfos(coursesInfo: ArrayList<CourseInfo>) {
+    private fun setCourseInfos(coursesInfo: ArrayList<CourseInfo>) {
         _courseInfos.value = coursesInfo
     }
 
@@ -65,6 +62,20 @@ class TestVM: ViewModel() {
                 courseInfoResponse.body()?.let { setCourseInfos(it) }
             }
         }
+    }
+
+    private val _currentMonth = MutableLiveData<Int>()
+    fun getCurrentMonth() = _currentMonth
+
+    fun setCurrentMonth(month: Int) {
+        _currentMonth.value = month
+    }
+
+    private val _currentDaysOfWeek = MutableLiveData<ArrayList<String>>()
+    fun getCurrentDaysOfWeek() = _currentDaysOfWeek
+
+    fun setCurrentDaysOfWeek(daysOfWeek: ArrayList<String>) {
+        _currentDaysOfWeek.value = daysOfWeek
     }
 
 }
