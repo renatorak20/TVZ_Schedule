@@ -18,16 +18,25 @@ class ScheduleItemDeserializer : JsonDeserializer<CourseInfo> {
         val parts = title.split("<br/>")
 
         return if (parts.size >= 5) {
+            val color = if(jsonObject?.get("color")?.isJsonNull != true) {
+                jsonObject?.get("color")?.asString.orEmpty()
+            } else if(parts[0].contains("Audit")) {
+                "#F08080"
+            } else {
+                "#6BA5C2"
+            }
+
             CourseInfo(
                 title = parts[0].substring(8, parts[0].length).split("</strong>").joinToString(" "),
                 lecturer = parts[1],
                 classRoom = parts[2],
                 direction = parts[3],
                 start = jsonObject?.get("start")?.asString.orEmpty(),
-                end = jsonObject?.get("end")?.asString.orEmpty()
+                end = jsonObject?.get("end")?.asString.orEmpty(),
+                color = color
             )
         } else {
-            CourseInfo(title, "", "", "", "", "")
+            CourseInfo(title, "", "", "", "", "", "")
         }
     }
 }

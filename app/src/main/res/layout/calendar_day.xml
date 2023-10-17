@@ -12,15 +12,15 @@
         tools:text="PON"
         android:textSize="14sp"
         android:layout_gravity="center"
-        android:layout_margin="10dp"/>
+        android:layout_margin="6dp"/>
 
     <TextView
         android:id="@+id/day_number"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:text="05"
-        android:textSize="20sp"
+        android:textSize="14sp"
         android:layout_gravity="center"
-        android:layout_margin="14dp"/>
+        android:layout_margin="6dp"/>
     
 </LinearLayout>

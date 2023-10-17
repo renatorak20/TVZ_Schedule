@@ -6,5 +6,6 @@ data class CourseInfo(
     val classRoom: String,
     val direction: String,
     val start: String,
-    val end: String
+    val end: String,
+    val color: String
 )

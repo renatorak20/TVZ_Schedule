@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/search_rounded_background"
+    android:id="@+id/background"
     android:padding="20dp"
     android:layout_margin="8dp">
 
@@ -29,5 +30,16 @@
         tools:text="dr.sc. Maja Turčić v.pred."
         app:layout_constraintStart_toStartOf="@id/title"
         app:layout_constraintTop_toBottomOf="@id/title"/>
+
+    <TextView
+        android:id="@+id/timePeriod"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintStart_toStartOf="@+id/lecturer"
+        app:layout_constraintTop_toBottomOf="@+id/lecturer"
+        tools:text="10:00 - 11:00" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

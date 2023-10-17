@@ -32,4 +32,6 @@
         <item name="december">Prosinac</item>
     </string-array>
 
+    <string name="periodTime">%1$s - %2$s</string>
+
 </resources>

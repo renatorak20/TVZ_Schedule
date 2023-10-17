@@ -54,9 +54,9 @@ class TestVM: ViewModel() {
         _courseInfos.value = coursesInfo
     }
 
-    fun getAvailableCourseInfo(semester: String, department: String) {
+    fun getAvailableCourseInfo(semester: String, department: String, startDate: String, endDate: String) {
         viewModelScope.launch {
-            val courseInfoResponse = Network().getService().getSchedule(semester, department, Calendar.getInstance().get(Calendar.YEAR).toString(), "2023-10-14", "2023-10-21")
+            val courseInfoResponse = Network().getService().getSchedule(semester, department, Calendar.getInstance().get(Calendar.YEAR).toString(), startDate, endDate)
 
             if(courseInfoResponse.isSuccessful) {
                 courseInfoResponse.body()?.let { setCourseInfos(it) }
